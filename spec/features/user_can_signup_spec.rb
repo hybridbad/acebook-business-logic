@@ -44,9 +44,9 @@ RSpec.feature "Sign up", type: :feature do
     end
   end
 
-  scenario "Completing the signup form navigates to posts page" do
-    sign_up
-    expect(page).to have_current_path("/posts")
+  scenario "Completing the signup form navigates to user's wall" do
+    sign_up username: "hivemind"
+    expect(page).to have_current_path("/hivemind")
   end
 
   scenario "Completing the signup form signs you in" do
