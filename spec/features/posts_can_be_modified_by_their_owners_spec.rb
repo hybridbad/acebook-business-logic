@@ -4,13 +4,13 @@ require "rails_helper"
 
 RSpec.feature "Editing posts", type: :feature do
   context "When looking at your own wall" do
-    scenario "A 'edit' link should appear on your own post" do
+    scenario "An 'edit' link should appear on your own post" do
       sign_up username: "user"
       create_post on_wall_of: "user"
       expect(page).to have_link("Edit")
     end
 
-    scenario "A 'edit' link should not appear on someone else's post" do
+    scenario "An 'edit' link should not appear on someone else's post" do
       sign_up username: "user1", email: "user1@gmail.com"
       sign_up username: "user2", email: "user2@gmail.com"
       create_post on_wall_of: "user1"
@@ -20,14 +20,14 @@ RSpec.feature "Editing posts", type: :feature do
   end
 
   context "When looking at someone else's wall" do
-    scenario "A 'edit' link should appear on your own post" do
+    scenario "An 'edit' link should appear on your own post" do
       sign_up username: "user1", email: "user1@gmail.com"
       sign_up username: "user2", email: "user2@gmail.com"
       create_post on_wall_of: "user1"
       expect(page).to have_link("Edit")
     end
 
-    scenario "A 'edit' link should not appear on someone else's post" do
+    scenario "An 'edit' link should not appear on someone else's post" do
       sign_up username: "user1", email: "user1@gmail.com"
       create_post on_wall_of: "user1"
       sign_up username: "user2", email: "user2@gmail.com"
