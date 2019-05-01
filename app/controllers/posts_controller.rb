@@ -4,6 +4,8 @@ class PostsController < ApplicationController
   def index
     if params[:user_id] != nil
       @user = User.find(params[:user_id])
+    elsif params[:username] != nil
+      @user = User.find_by(username: params[:username])
     end
     @posts = Post.order("created_at DESC")
   end
