@@ -1,4 +1,8 @@
-<h1>Posts page</h1>
+<% if @user %>
+  <h1><%= @user.username.capitalize %>'s Wall</h1>
+<% else %>
+  <h1>Posts</h1>
+<% end %>
 
 <div class="new-post-button">
   <%= link_to new_post_path, class: "btn btn-primary" do %>
@@ -11,7 +15,7 @@
   <div class='post-card'>
     <div class="post-header">
       <div class="post-author">
-        <%= post.email %>
+        <%= post.username %>
       </div>
       <div class="post-published-time">
         <%= post.created_at.strftime("%d-%m-%Y")%> at <%= post.created_at.strftime("%I:%M %p")%>
