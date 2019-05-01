@@ -6,7 +6,7 @@
 
 <div class="new-post-button">
   <% if @user %>
-    <%= link_to new_post_path recipient_id: @user.id, class: "btn btn-primary" do %>
+    <%= link_to new_post_path(recipient_id: @user.id), class: "btn btn-primary" do %>
       Create new post
     <% end %>
   <% end %>

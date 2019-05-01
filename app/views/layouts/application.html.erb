@@ -19,7 +19,7 @@
         <ul>
           <% if session[:user_id] %>
             <li>
-              <%= link_to "View posts", posts_path %>
+              <%= link_to "My wall", "/#{current_user.username}" %>
             </li>
             <li>
               <%= link_to "Log out", logout_path, method: :delete %>

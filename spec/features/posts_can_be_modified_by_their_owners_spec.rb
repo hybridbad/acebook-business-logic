@@ -68,18 +68,18 @@ RSpec.feature "Editing posts", type: :feature do
 
   context "Presence of the edit link depends on the post's age" do
     scenario "The edit link doesn't appear if a post is 10 minutes old" do
-      sign_up
-      create_post
+      sign_up username: "user"
+      create_post on_wall_of: "user"
       Timecop.freeze(601)
-      visit "/posts"
+      visit "/user"
       expect(page).not_to have_link("Edit")
     end
 
     scenario "The edit link does appear if it's less than 10 minutes old" do
-      sign_up
-      create_post
+      sign_up username: "user"
+      create_post on_wall_of: "user"
       Timecop.freeze(599)
-      visit "/posts"
+      visit "/user"
       expect(page).to have_link("Edit")
     end
   end
