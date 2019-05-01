@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-def sign_up(username: "me", email: "myemail@hotmail.com", password: "password")
+def sign_up(username: "User", email: "myemail@hotmail.com", password: "password")
   visit "/"
   fill_in "Username", with: username
   fill_in "Email address", with: email
@@ -15,7 +15,7 @@ def log_in(email: "myemail@hotmail.com", password: "password")
   click_button "Log in"
 end
 
-def create_post(on_wall_of: "me", message: "Hello m0m")
+def create_post(on_wall_of: "User", message: "Hello m0m")
   visit "/#{on_wall_of}"
   click_link "Create new post"
   fill_in "Message", with: message
