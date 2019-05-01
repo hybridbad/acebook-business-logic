@@ -1,23 +1,16 @@
-<% if @user %>
-  <h1><%= @user.username.capitalize %>'s Wall</h1>
-<% else %>
-  <h1>Posts</h1>
-<% end %>
+<h1><%= @user.username.capitalize %>'s Wall</h1>
 
 <div class="new-post-button">
-  <% if @user %>
-    <%= link_to new_post_path(recipient_id: @user.id), class: "btn btn-primary" do %>
-      Create new post
-    <% end %>
+  <%= link_to new_post_path(recipient_id: @user.id), class: "btn btn-primary" do %>
+    Create new post
   <% end %>
 </div>
 
 <% @posts.each do |post| %>
-
   <div class='post-card'>
     <div class="post-header">
       <div class="post-author">
-        <%= post.username %>
+        <%= post.author_username %>
       </div>
       <div class="post-published-time">
         <%= post.created_at.strftime("%d-%m-%Y")%> at <%= post.created_at.strftime("%I:%M %p")%>
@@ -27,7 +20,7 @@
       <p><%= simple_format(post.message) %></p>
     </div>
     <div class="post-edit-options">
-      <% if post.author_id == current_user.id %>
+      <% if post.author == current_user %>
         <% if post.editable? %>
           <%= link_to 'Edit', edit_post_path(post), class: "btn btn-edit-post" %>
         <% end %>

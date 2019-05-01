@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
 class Post < ApplicationRecord
-  belongs_to :author, :class_name => "User"
-  delegate :email, :to => :author
-  delegate :username, :to => :author
-  
+  belongs_to :author, class_name: "User"
+  delegate :username, to: :author, prefix: :author
+
+  belongs_to :recipient, class_name: "User"
+  delegate :username, to: :recipient, prefix: :recipient
+  delegate :id, to: :recipient, prefix: :recipient
+
   def editable?
     less_than_ten_minutes_old?
   end

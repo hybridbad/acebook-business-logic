@@ -15,7 +15,7 @@ RSpec.feature "Nav bar", type: :feature do
       expect(current_path).to eq "/user"
     end
 
-    scenario "Logged out users do not see 'My wall'sposts link" do
+    scenario "Logged out users do not see 'My wall' link" do
       visit "/"
       expect(page).not_to have_link("My wall")
     end
