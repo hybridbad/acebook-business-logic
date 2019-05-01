@@ -3,24 +3,43 @@
 require "rails_helper"
 
 RSpec.feature "Deleting posts", type: :feature do
-  scenario "A 'delete' link should appear on a user's post" do
-    sign_up
-    create_post
-    expect(page).to have_link("Remove")
+  context "When looking at your own wall" do
+    scenario "A 'remove' link should appear on your own post" do
+      sign_up username: "user"
+      create_post on_wall_of: "user"
+      expect(page).to have_link("Remove")
+    end
+
+    scenario "A 'remove' link should not appear on someone else's post" do
+      sign_up username: "user1", email: "user1@gmail.com"
+      sign_up username: "user2", email: "user2@gmail.com"
+      create_post on_wall_of: "user1"
+      log_in email: "user1@gmail.com"
+      expect(page).not_to have_link("Remove")
+    end
   end
 
-  scenario "A 'delete' link should not appear on a different user's post" do
-    sign_up username: "user1", email: "user1@gmail.com"
-    create_post
-    sign_up username: "user2",  email: "user2@gmail.com"
-    visit "/posts"
-    expect(page).not_to have_link("Remove")
+  context "When looking at someone else's wall" do
+    scenario "A 'remove' link should appear on your own post" do
+      sign_up username: "user1", email: "user1@gmail.com"
+      sign_up username: "user2", email: "user2@gmail.com"
+      create_post on_wall_of: "user1"
+      expect(page).to have_link("Remove")
+    end
+
+    scenario "A 'remove' link should not appear on someone else's post" do
+      sign_up username: "user1", email: "user1@gmail.com"
+      create_post on_wall_of: "user1"
+      sign_up username: "user2", email: "user2@gmail.com"
+      visit "/user1"
+      expect(page).not_to have_link("Remove")
+    end
   end
 
   context "When a user clicks 'delete' on their post" do
     before do
-      sign_up email: "user1@gmail.com"
-      create_post
+      sign_up username: "user1", email: "user1@gmail.com"
+      create_post on_wall_of: "user1"
       expect(page).to have_content("Hello m0m")
       click_link('Remove')
     end

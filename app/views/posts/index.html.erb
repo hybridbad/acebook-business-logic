@@ -5,8 +5,10 @@
 <% end %>
 
 <div class="new-post-button">
-  <%= link_to new_post_path, class: "btn btn-primary" do %>
-    Create new post
+  <% if @user %>
+    <%= link_to new_post_path recipient_id: @user.id, class: "btn btn-primary" do %>
+      Create new post
+    <% end %>
   <% end %>
 </div>
 
@@ -29,7 +31,7 @@
         <% if post.editable? %>
           <%= link_to 'Edit', edit_post_path(post), class: "btn btn-edit-post" %>
         <% end %>
-        <%= link_to 'Remove', post, method: :delete, :data => { :confirm => "Are you sure you want to delete this message?" }, class: "btn btn-edit-post" %>
+        <%= link_to 'Remove', post, method: :delete, data: { confirm: "Are you sure you want to delete this message?" }, class: "btn btn-edit-post" %>
       <% end %>
     </div>
   </div>
