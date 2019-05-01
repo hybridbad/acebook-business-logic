@@ -114,6 +114,7 @@ textarea {
   padding: 10px;
   display: inline-flex;
   font: inherit;
+  text-decoration: none;
   border: 1px solid #c3c3c3;
   border-radius: 5px;
 }
@@ -130,17 +131,20 @@ textarea {
   background: linear-gradient(#94d27b, #578843);
 }
 
-.btn-add-delete {
+.btn-edit-post {
   -webkit-appearance: none;
   appearance: none;
-  padding: 5px;
-  display: inline-flex;
-  background-color: #4267b2;
+  padding: 4px 5px 5px 5px;
+  font-size: 0.7rem;
+
+  border-color: #8b9dc3;
+
+  background: linear-gradient(#8b9dc3, #3b5998);
   color: white;
-  font: inherit;
-  border: 1px solid #c3c3c3;
-  border-radius: 5px;
-  text-decoration: none;
+}
+
+.btn-edit-post:hover {
+  background: linear-gradient(#acbde0, #3b5998);
 }
 
 .new-post-button {
@@ -169,6 +173,7 @@ textarea {
 /* <p2> font-family: 'Faster One', cursive; */
 
 .post-card {
+  font-size: 0.9rem;
   background-color:white;
   border: 1px solid #d0d1d5;
   border-radius:3px;
@@ -184,22 +189,14 @@ textarea {
 }
 
 .post-author {
-  font-size:14px;
   font-weight: bold;
-  line-height: 1.38;
   color: #365899;
   text-decoration:none;
   margin-bottom:2px;
 }
 
-.post-pubished-time {
+.post-published-time {
+  font-size: 0.8rem;
   font-family: Helvetica;
-  font-size:12px;
   color: #90949c;
-}
-
-.post-content {
-  clear:both;
-  font-size:14px;
-  line-height: 1.38;
 }
