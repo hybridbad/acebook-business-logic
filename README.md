@@ -211,4 +211,8 @@ So that I can log back in
 ```
 
 ## Learning Documentation
-Our learnings can be found on our team wiki [here](https://github.com/Hives/acebook-business-logic/wiki).
+Our learnings can be found on our team wiki [here](https://github.com/Hives/acebook-business-logic/wiki).]
+
+## Product Owner Feedback (Michael)
+We asked for confirmation that a decision we were making was in line with business requirements (Goal: I can justify my decisions in a business context)
+We are about to implement usernames for Acebook users. Those who have already signed up do not have usernames, so we needed to provide them with one in the database for this unique name to now be used to make up the URL of their profile page. We decided to use a generic incrementing name of 'AcebookUser1, AcebookUser2... etc' rather than the user email (for privacy purposes), explaining to the product owner the need for this field, and the justification for our decision. Michael said that this sounds good and was "pretty much how Facebook did it when they implemented usernames as part of the URL"

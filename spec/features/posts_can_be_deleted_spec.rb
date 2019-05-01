@@ -6,15 +6,15 @@ RSpec.feature "Deleting posts", type: :feature do
   scenario "A 'delete' link should appear on a user's post" do
     sign_up
     create_post
-    expect(page).to have_link("Delete")
+    expect(page).to have_link("Remove")
   end
 
-  scenario "An 'delete' link should not appear on a different user's post" do
-    sign_up email: "user1@gmail.com"
+  scenario "A 'delete' link should not appear on a different user's post" do
+    sign_up username: "user1", email: "user1@gmail.com"
     create_post
-    sign_up email: "user2@gmail.com"
+    sign_up username: "user2",  email: "user2@gmail.com"
     visit "/posts"
-    expect(page).not_to have_link("Delete")
+    expect(page).not_to have_link("Remove")
   end
 
   context "When a user clicks 'delete' on their post" do
@@ -22,7 +22,7 @@ RSpec.feature "Deleting posts", type: :feature do
       sign_up email: "user1@gmail.com"
       create_post
       expect(page).to have_content("Hello m0m")
-      click_link('Delete')
+      click_link('Remove')
     end
 
     scenario "The post gets deleted" do
