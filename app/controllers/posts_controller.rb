@@ -21,7 +21,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     if @post.author_id != current_user.id
       flash[:danger] = "You can't edit that post!"
-      redirect_to "/#{current_user.id}"
+      redirect_to "/#{current_user.username}"
     end
   end
 
@@ -30,7 +30,7 @@ class PostsController < ApplicationController
     if post.author_id == current_user.id
       post.destroy
       flash[:success] = "Post deleted"
-      redirect_to "/#{current_user.id}"
+      redirect_to "/#{current_user.username}"
     end
   end
 
