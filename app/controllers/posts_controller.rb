@@ -5,8 +5,11 @@ class PostsController < ApplicationController
     if params[:user_id] != nil
       @user = User.find(params[:user_id])
       @posts = Post.where("recipient_id = ?", @user.id).reverse
+    elsif params[:username] != nil
+      @user = User.find_by(username: params[:username])
+      @posts = Post.where("recipient_id = ?", @user.id).reverse
     else
-      @posts = Post.all
+      @posts = Post.all.reverse
     end
   end
 
@@ -36,7 +39,8 @@ class PostsController < ApplicationController
     params = post_params
     params[:author_id] = logged_in_user.id
     @post = Post.create(params)
-    redirect_to "/#{params[:recipient_id]}"
+    recipient = User.find(params[:recipient_id])
+    redirect_to "/#{recipient.username}"
   end
 
   def update

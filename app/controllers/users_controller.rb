@@ -17,7 +17,7 @@ class UsersController < ApplicationController
       user.save
       session[:user_id] = user.id
       flash[:success] = "New account created"
-      redirect_to posts_path and return
+      redirect_to "/#{current_user.username}" and return
     else
       flash[:danger] = user.errors.full_messages.join("<br>")
     end

@@ -3,18 +3,37 @@
 require "rails_helper"
 
 RSpec.feature "Editing posts", type: :feature do
-  scenario "An 'edit' link should appear on a user's post" do
-    sign_up
-    create_post
-    expect(page).to have_link("Edit")
+  context "When looking at your own wall" do
+    scenario "A 'edit' link should appear on your own post" do
+      sign_up username: "user"
+      create_post on_wall_of: "user"
+      expect(page).to have_link("Edit")
+    end
+
+    scenario "A 'edit' link should not appear on someone else's post" do
+      sign_up username: "user1", email: "user1@gmail.com"
+      sign_up username: "user2", email: "user2@gmail.com"
+      create_post on_wall_of: "user1"
+      log_in email: "user1@gmail.com"
+      expect(page).not_to have_link("Edit")
+    end
   end
 
-  scenario "An 'edit' link should not appear on a different user's post" do
-    sign_up username: "user1", email: "user1@gmail.com"
-    create_post
-    sign_up username: "user2", email: "user2@gmail.com"
-    visit "/posts"
-    expect(page).not_to have_link("Edit")
+  context "When looking at someone else's wall" do
+    scenario "A 'edit' link should appear on your own post" do
+      sign_up username: "user1", email: "user1@gmail.com"
+      sign_up username: "user2", email: "user2@gmail.com"
+      create_post on_wall_of: "user1"
+      expect(page).to have_link("Edit")
+    end
+
+    scenario "A 'edit' link should not appear on someone else's post" do
+      sign_up username: "user1", email: "user1@gmail.com"
+      create_post on_wall_of: "user1"
+      sign_up username: "user2", email: "user2@gmail.com"
+      visit "/user1"
+      expect(page).not_to have_link("Edit")
+    end
   end
 
   scenario "The edit link should go to the edit page for the post" do
