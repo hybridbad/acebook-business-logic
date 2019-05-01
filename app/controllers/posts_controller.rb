@@ -4,8 +4,10 @@ class PostsController < ApplicationController
   def index
     if params[:user_id] != nil
       @user = User.find(params[:user_id])
+      @posts = Post.where("recipient_id = ?", @user.id).reverse
+    else
+      @posts = Post.all
     end
-    @posts = Post.order("created_at DESC")
   end
 
   def new
@@ -16,7 +18,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     if @post.author_id != current_user.id
       flash[:danger] = "You can't edit that post!"
-      redirect_to posts_path
+      redirect_to "/#{current_user.id}"
     end
   end
 
@@ -25,16 +27,16 @@ class PostsController < ApplicationController
     if post.author_id == current_user.id
       post.destroy
       flash[:success] = "Post deleted"
-      redirect_to posts_path
+      redirect_to "/#{current_user.id}"
     end
   end
 
   def create
-    user = current_user
+    logged_in_user = current_user
     params = post_params
-    params[:author_id] = user.id
+    params[:author_id] = logged_in_user.id
     @post = Post.create(params)
-    redirect_to posts_url
+    redirect_to "/#{params[:recipient_id]}"
   end
 
   def update
@@ -55,6 +57,6 @@ class PostsController < ApplicationController
   private
 
     def post_params
-      params.require(:post).permit(:message)
+      params.require(:post).permit(:message, :recipient_id)
     end
 end

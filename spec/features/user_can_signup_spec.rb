@@ -21,7 +21,7 @@ RSpec.feature "Sign up", type: :feature do
     end
   end
 
-  scenario "Logged out users should get see a message when they get redirected" do
+  scenario "Logged out users should see a message when they get redirected" do
     visit "/posts/new"
     expect(page).to have_content("You must be logged in to access that page")
   end

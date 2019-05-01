@@ -5,8 +5,10 @@
 <% end %>
 
 <div class="new-post-button">
-  <%= link_to new_post_path do %>
-    Create new post
+  <% if @user %>
+    <%= link_to new_post_path(:recipient_id => @user.id)  do %>
+      Create new post
+    <% end %>
   <% end %>
 </div>
 

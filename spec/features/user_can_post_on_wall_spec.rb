@@ -10,7 +10,7 @@ RSpec.feature "Post on wall", type: :feature do
 
       user_1 = User.create(email: "user1@gmail.com",
                            password: "password")
-      user_2 = User.create(email: "user2@gmail.com",
+      @user_2 = User.create(email: "user2@gmail.com",
                            password: "password")
       log_in email: "user2@gmail.com", password: "password"
       visit "/#{user_1.id}"
@@ -19,16 +19,17 @@ RSpec.feature "Post on wall", type: :feature do
       click_button "Submit"
     end
 
-    xit "user 2 is redirected to user 1's wall after posting" do
+    scenario "user 2 is redirected to user 1's wall after posting" do
       expect(page).to have_content ("User1@gmail.com's Wall")
     end
 
-    xit "user 2 can see post on user 1s wall" do
+    scenario "user 2 can see post on user 1s wall" do
       expect(page).to have_content ("Hello User 1")
     end
 
-    xit "user 2 can not see post on their own wall" do
-      visit "/#{user_2_id}"
+    scenario "user 2 can not see post on their own wall" do
+      visit "/#{@user_2.id}"
+      save_and_open_page
       expect(page).not_to have_content ("Hello User 1")
     end
   end
