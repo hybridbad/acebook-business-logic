@@ -3,21 +3,21 @@
 require "rails_helper"
 
 RSpec.feature "Nav bar", type: :feature do
-  describe "'View posts'" do
-    scenario "Logged in users should see a link to posts page" do
+  describe "'My wall'" do
+    scenario "Logged in users should see a link to their wall" do
       sign_up
-      expect(page).to have_link("View posts")
+      expect(page).to have_link("My wall")
     end
 
-    scenario "'View posts' link should go to posts page" do
-      sign_up
-      click_link("View posts")
-      expect(current_path).to eq "/posts"
+    scenario "'My wall' link should go to posts page" do
+      sign_up username: "user"
+      click_link("My wall")
+      expect(current_path).to eq "/user"
     end
 
-    scenario "Logged out users do not see posts link" do
+    scenario "Logged out users do not see 'My wall'sposts link" do
       visit "/"
-      expect(page).not_to have_link("View posts")
+      expect(page).not_to have_link("My wall")
     end
   end
 

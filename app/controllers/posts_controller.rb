@@ -4,13 +4,10 @@ class PostsController < ApplicationController
   def index
     if params[:user_id] != nil
       @user = User.find(params[:user_id])
-      @posts = Post.where("recipient_id = ?", @user.id).reverse
     elsif params[:username] != nil
       @user = User.find_by(username: params[:username])
-      @posts = Post.where("recipient_id = ?", @user.id).reverse
-    else
-      @posts = Post.all.reverse
     end
+    @posts = Post.where("recipient_id = ?", @user.id).reverse
   end
 
   def new
@@ -35,24 +32,22 @@ class PostsController < ApplicationController
   end
 
   def create
-    logged_in_user = current_user
-    params = post_params
-    params[:author_id] = logged_in_user.id
-    @post = Post.create(params)
-    recipient = User.find(params[:recipient_id])
+    @post = Post.create(post_params.merge(author_id: current_user.id))
+    recipient = User.find(post_params[:recipient_id])
     redirect_to "/#{recipient.username}"
   end
 
   def update
     post = Post.find(params[:id])
+    recipient = User.find(post.recipient_id)
 
     unless post.editable?
       flash[:danger] = "Could not edit post. Posts are only editable for 10 minutes."
-      redirect_to posts_path and return
+      redirect_to "/#{recipient.username}" and return
     end
 
-    if post.update(post_params)
-      redirect_to posts_path
+    if post.update(post_params.merge(recipient_id: recipient.id))
+      redirect_to "/#{recipient.username}"
     else
       render "edit"
     end
