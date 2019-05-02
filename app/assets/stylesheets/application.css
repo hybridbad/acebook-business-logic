@@ -58,6 +58,10 @@ body {
   position: relative;
 }
 
+#user-search input {
+  width: inherit;
+}
+
 #main_nav a {
   color: white; 
   text-decoration: none;
