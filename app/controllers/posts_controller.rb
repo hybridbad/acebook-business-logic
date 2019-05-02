@@ -35,7 +35,7 @@ class PostsController < ApplicationController
       return redirect_to "/#{post.recipient_username}"
     end
 
-    if post.update(post_params.merge(recipient_id: post.recipient_id))
+    if post.update(post_params)
       redirect_to "/#{post.recipient_username}"
     else
       render "edit"
