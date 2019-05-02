@@ -11,6 +11,6 @@ Rails.application.routes.draw do
 
   root "users#new"
 
-  get "/:user_id", to: "posts#index", constraints: { user_id: /\d+/ }
+  # get "/:user_id", to: "posts#index", constraints: { user_id: /\d+/ }
   get "/:username", to: "posts#index"
 end
