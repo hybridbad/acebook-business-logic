@@ -41,6 +41,7 @@ group :development, :test do
   gem "capybara", "~> 2.13"
   gem "launchy"
   gem "orderly"
+  gem "pry"
   gem "rspec-rails", "~> 3.5"
   # for linting.
   gem "rubocop"
