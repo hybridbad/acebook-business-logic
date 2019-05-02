@@ -22,15 +22,6 @@ class PostsController < ApplicationController
     end
   end
 
-  def destroy
-    post = Post.find(params[:id])
-    if post.author == current_user
-      post.destroy
-      flash[:success] = "Post deleted"
-      redirect_to "/#{current_user.username}"
-    end
-  end
-
   def create
     post = Post.create(post_params.merge(author_id: current_user.id))
     redirect_to "/#{post.recipient_username}"
@@ -41,13 +32,22 @@ class PostsController < ApplicationController
 
     unless post.editable?
       flash[:danger] = "Could not edit post. Posts are only editable for 10 minutes."
-      redirect_to "/#{post.recipient_username}" and return
+      return redirect_to "/#{post.recipient_username}"
     end
 
     if post.update(post_params.merge(recipient_id: post.recipient_id))
       redirect_to "/#{post.recipient_username}"
     else
       render "edit"
+    end
+  end
+
+  def destroy
+    post = Post.find(params[:id])
+    if post.author == current_user
+      post.destroy
+      flash[:success] = "Post deleted"
+      redirect_to "/#{current_user.username}"
     end
   end
 
