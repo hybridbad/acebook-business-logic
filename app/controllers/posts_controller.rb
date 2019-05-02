@@ -3,11 +3,11 @@
 class PostsController < ApplicationController
   def index
     if params[:user_id] != nil
-      @user = User.find(params[:user_id])
+      @wall_owner = User.find(params[:user_id])
     elsif params[:username] != nil
-      @user = User.find_by(username: params[:username])
+      @wall_owner = User.find_by(username: params[:username])
     end
-    @posts = Post.where("recipient_id = ?", @user.id).reverse
+    @posts = Post.where("recipient_id = ?", @wall_owner.id).reverse
   end
 
   def new
