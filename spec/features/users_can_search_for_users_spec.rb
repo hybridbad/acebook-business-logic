@@ -10,4 +10,11 @@ RSpec.feature "Search", type: :feature do
     visit "/"
     expect(page).not_to have_field("user_search")
   end
+
+  scenario "Submitting the search takes you to the results page" do
+    sign_up
+    fill_in "user_search", with: "arthur"
+    click_button "Go"
+    expect(page).to have_content("Search results")
+  end
 end
