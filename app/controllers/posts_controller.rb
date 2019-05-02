@@ -16,46 +16,44 @@ class PostsController < ApplicationController
 
   def edit
     @post = Post.find(params[:id])
-    if @post.author_id != current_user.id
+    if @post.author != current_user
       flash[:danger] = "You can't edit that post!"
       redirect_to "/#{current_user.username}"
     end
   end
 
+  def create
+    post = Post.create(post_params.merge(author_id: current_user.id))
+    redirect_to "/#{post.recipient_username}"
+  end
+
+  def update
+    post = Post.find(params[:id])
+
+    unless post.editable?
+      flash[:danger] = "Could not edit post. Posts are only editable for 10 minutes."
+      return redirect_to "/#{post.recipient_username}"
+    end
+
+    if post.update(post_params.merge(recipient_id: post.recipient_id))
+      redirect_to "/#{post.recipient_username}"
+    else
+      render "edit"
+    end
+  end
+
   def destroy
     post = Post.find(params[:id])
-    if post.author_id == current_user.id
+    if post.author == current_user
       post.destroy
       flash[:success] = "Post deleted"
       redirect_to "/#{current_user.username}"
     end
   end
 
-  def create
-    @post = Post.create(post_params.merge(author_id: current_user.id))
-    recipient = User.find(post_params[:recipient_id])
-    redirect_to "/#{recipient.username}"
-  end
-
-  def update
-    post = Post.find(params[:id])
-    recipient = User.find(post.recipient_id)
-
-    unless post.editable?
-      flash[:danger] = "Could not edit post. Posts are only editable for 10 minutes."
-      redirect_to "/#{recipient.username}" and return
-    end
-
-    if post.update(post_params.merge(recipient_id: recipient.id))
-      redirect_to "/#{recipient.username}"
-    else
-      render "edit"
-    end
-  end
-
   private
 
-    def post_params
-      params.require(:post).permit(:message, :recipient_id)
-    end
+  def post_params
+    params.require(:post).permit(:message, :recipient_id)
+  end
 end

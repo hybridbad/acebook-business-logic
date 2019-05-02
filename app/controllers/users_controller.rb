@@ -15,7 +15,7 @@ class UsersController < ApplicationController
 
     if user.valid?
       user.save
-      session[:user_id] = user.id
+      log_in(user)
       flash[:success] = "New account created"
       redirect_to "/#{current_user.username}" and return
     else
