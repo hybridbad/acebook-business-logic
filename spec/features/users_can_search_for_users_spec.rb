@@ -17,4 +17,27 @@ RSpec.feature "Search", type: :feature do
     click_button "Go"
     expect(page).to have_content("Search results")
   end
+
+  scenario "If no search results are returned the user sees a message" do
+    sign_up(username: "arthur", email: "user1@gmail.com")
+    fill_in "user_search", with: "adasdasd"
+    click_button "Go"
+    expect(page).to have_content("No users found")
+  end
+
+  scenario "Search results that match a username will include the user" do
+    sign_up(username: "arthur", email: "user1@gmail.com")
+    sign_up(username: "bob", email: "user2@gmail.com")
+    fill_in "user_search", with: "arthur"
+    click_button "Go"
+    expect(page).to have_content("arthur")
+  end
+
+  scenario "Search results that don't match a username will not include the user" do
+    sign_up(username: "arthur", email: "user1@gmail.com")
+    sign_up(username: "bob", email: "user2@gmail.com")
+    fill_in "user_search", with: "adasdd"
+    click_button "Go"
+    expect(page).not_to have_content("arthur")
+  end
 end

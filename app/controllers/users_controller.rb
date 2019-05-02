@@ -26,5 +26,7 @@ class UsersController < ApplicationController
   end
 
   def index
+    query = params[:user_search]
+    @search_results = User.search_emails_and_usernames(query)
   end
 end
